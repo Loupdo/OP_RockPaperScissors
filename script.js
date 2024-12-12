@@ -41,7 +41,6 @@ for(let i=0;i<5;i++){
         computerScore++
     }
     console.log(`Computer:${computerScore} vs you:${humanScore}`)
-    console.log("game"+i)
 }
 }
 
