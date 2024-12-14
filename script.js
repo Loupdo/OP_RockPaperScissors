@@ -1,48 +1,65 @@
 const getComputerChoice = () => {
     const randomNumber= Math.floor(3*(Math.random()))
     if (randomNumber <1){
-        return "scissors"
+        return "Scissors"
     } else if (randomNumber <2){
-        return "paper"
+        return "Paper"
     } else {
-        return "rock"
+        return "Rock"
     }
-}
-
-const getHumanChoice = () => {
-    const HumanChoice = prompt("Enter either Rock, Paper, or Scissors:")
-    return HumanChoice.toLowerCase()
 }
 
 const playRound = (humanChoice, computerChoice) =>{
-if((humanChoice === "rock" && computerChoice === "scissors")||(humanChoice === "scissors" && computerChoice === "paper")||(humanChoice === "paper" && computerChoice === "rock")){
-    console.log(`You won!! ${humanChoice} beats ${computerChoice}`) 
-    return +1
-} else if ((humanChoice === "paper" && computerChoice === "scissors")||(humanChoice === "rock" && computerChoice === "paper")||(humanChoice === "scissors" && computerChoice === "rock")){
-    console.log(`You lost!! ${humanChoice} is beaten by ${computerChoice}`) 
-    return -1
+if((humanChoice === "Rock" && computerChoice === "Scissors")||(humanChoice === "Scissors" && computerChoice === "Paper")||(humanChoice === "Paper" && computerChoice === "Rock")){
+    result.innerText=`You won!! ${humanChoice} beats ${computerChoice}`
+    humanScore++
+} else if ((humanChoice === "Paper" && computerChoice === "Scissors")||(humanChoice === "Rock" && computerChoice === "Paper")||(humanChoice === "Scissors" && computerChoice === "Rock")){
+    result.innerText=`You lost!! ${humanChoice} is beaten by ${computerChoice}` 
+    computerScore++
 } else {
-    console.log(`You both picked ${humanChoice}. Score unchanged`)
+    result.innerText=`You both picked ${humanChoice}. Score unchanged` 
 }
+para.innerText=`Computer :${computerScore} vs you: ${humanScore}`
+result.appendChild(para);
+return 
 }
-
 
 const playGame= () =>{
+btnRock.addEventListener("click", ()=>{
+    computerSelection = getComputerChoice();
+    if(computerScore <5 && humanScore <5){
+    playRound("Rock",computerSelection)
+    } else {endgame()}})
+btnPaper.addEventListener("click", () => {
+    computerSelection = getComputerChoice();
+    if(computerScore <5 && humanScore <5){
+    playRound("Paper",computerSelection)
+    } else {endgame()}})
+btnScissors.addEventListener("click",() => {
+    computerSelection = getComputerChoice();
+    if(computerScore <5 && humanScore <5){
+    playRound("Scissors",computerSelection)
+    } else {endgame()}})
+}
+
+
+const endgame= () => {
+    if (humanScore === 5){
+        result.innerText =`You won: ${humanScore} vs ${computerScore}`;
+    }
+    else if(computerScore === 5){ 
+        result.innerText =`Computer won: ${computerScore} vs ${humanScore}`;
+    }
+
+}
+
 let humanScore = 0
 let computerScore = 0
-
-for(let i=0;i<5;i++){
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    const result=playRound(humanSelection,computerSelection)
-    if (result===1){
-        humanScore++
-    } else if (result===-1){
-        computerScore++
-    }
-    console.log(`Computer:${computerScore} vs you:${humanScore}`)
-}
-}
-
-
+let computerChoice = ""
+const btnRock= document.querySelector(".rock-btn");
+const btnPaper= document.querySelector(".paper-btn");
+const btnScissors= document.querySelector(".scissors-btn");
+const result= document.querySelector(".result");
+const para = document.createElement("p");
 playGame()
+
